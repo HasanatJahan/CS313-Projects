@@ -1,0 +1,120 @@
+import java.util.*;
+/**
+ * Read the input file using TextFileInput class.
+ * Define the class to have tokenize the Candle class,
+ * then put them into a unsorted array which is then sorted
+ * to create another array.
+ * @author Hasanat Jahan
+ */
+
+public class Project1 {
+    public static Candle[] unsortedCandleArray;
+    public static Candle[] sortedCandleArray;
+    public static TextFileInput inputFile;
+    public static int candleCount;
+
+    public static void main(String[] args){
+        String myFile = args[0];
+
+        inputFile = new TextFileInput(myFile);
+        int numLines=inputFile.getLineCount();
+
+        //initialize the number of candles
+        candleCount = countCandles(inputFile);
+        System.out.println("this is candle count: "+ candleCount);
+
+        //decide the size of each array
+        unsortedCandleArray = new Candle[numLines];
+        sortedCandleArray= new Candle[numLines];
+
+        //fills the arrays
+        fillArray(inputFile);
+
+        //sort the sortedCandleArray array
+        arraySelectionSorter(sortedCandleArray);
+
+        //display the candles
+        new CandleGUI(unsortedCandleArray,sortedCandleArray);
+        System.out.println(sortedCandleArray.length);
+    }
+
+    /**
+     * Method to count the number of candles
+     */
+    public static int countCandles(TextFileInput userFile){
+        int count=0;
+        String line = userFile.readLine();
+        while(line!=null){
+            StringTokenizer cTokens = new StringTokenizer(line, ",");
+            //only if the line has three arguments- then get the arguments
+            System.out.println("This is inside the method"+ line);
+            if(cTokens.countTokens()==3){
+                count++;
+                System.out.println(count);
+            }
+            line = userFile.readLine();
+        }
+        return count;
+    }
+
+    /**
+     * Method to return the number of candle count
+     */
+    public static int getCandleCount(){
+        return candleCount;
+    }
+
+    /**
+     * Method to fill the unsorted array from a TextFileInput
+     *
+     */
+    public static void fillArray(TextFileInput myFile){
+        String line = myFile.readLine();
+
+        System.out.println("This is inside the fillArray method "+ line);
+
+        int count=0;
+        while(line!=null){
+            StringTokenizer cTokens = new StringTokenizer(line, ",");
+            //only if the line has three arguments- then get the arguments
+            if(cTokens.countTokens()==3){
+                int h = Integer.parseInt(cTokens.nextToken());
+                int w = Integer.parseInt(cTokens.nextToken());
+                float p = Float.parseFloat(cTokens.nextToken());
+                Candle c = new Candle(h, w, p);
+                //now add the candle to the array
+                unsortedCandleArray[count++] = c;
+                sortedCandleArray[count++] = c;
+            }
+            line = myFile.readLine();
+        }
+    }
+
+    /**
+     * This method sorts the unsorted array to create a new sorted array
+     */
+    public static void arraySelectionSorter(Candle[] candleArray){
+        for(int i=0; i<candleCount-1; i++){
+            int lowestIndex=i;
+            for(int j=i+1; j<candleCount; j++){
+                float jCandlePrice= candleArray[j].getPrice();
+                float lowestIndexCandlePrice = candleArray[lowestIndex].getPrice();
+                if(jCandlePrice < lowestIndexCandlePrice) {
+                    lowestIndex = j;
+                }
+            }//for j
+            //now to swap the values
+            float iCandlePrice = candleArray[i].getPrice();
+            float lowestIndexCandlePrice= candleArray[lowestIndex].getPrice();
+            if(iCandlePrice == lowestIndexCandlePrice){
+                Candle temp = candleArray[lowestIndex];
+                candleArray[lowestIndex]= candleArray[i];
+                candleArray[i]=temp;
+            }//if
+        }//for i
+    }
+
+
+}
+
+
