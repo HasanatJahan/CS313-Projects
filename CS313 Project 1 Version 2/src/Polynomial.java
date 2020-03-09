@@ -94,27 +94,64 @@ public class Polynomial extends AbstractPolynomial {
             DNode pNode = p.data.getFirst();
             double coeff;
 
-            while(thisNode != null || pNode != null){
+            while(thisNode != null && pNode != null){
                 Term thisNodeTerm = (Term)thisNode.getData();
                 Term pNodeTerm = (Term)pNode.getData();
                 //if one is greater than the other than add the node
                 if(thisNodeTerm.getDegree() > pNodeTerm.getDegree()){
                     ans.data.addLast(thisNodeTerm);
                     thisNode = thisNode.getNext();
+
+                    // TODO -- fix this portion to work with the exception - currently as soon as there is a null - it goes to catch
+
+                    //nested if statements maybe
+                    if(thisNode == null){
+                        while (pNode != null){
+                            pNodeTerm = (Term)pNode.getData();
+                            ans.data.addLast(pNodeTerm);
+                            pNode = pNode.getNext();
+                        }
+                    }
+
                 }
+
                 else if(thisNodeTerm.getDegree() < pNodeTerm.getDegree()){
                     ans.data.addLast(pNodeTerm);
                     pNode = pNode.getNext();
+
+
                 }
+                // if they are equal then add them together
                 else{
                     coeff = thisNodeTerm.getCoefficient() + pNodeTerm.getCoefficient();
                     Term newTerm = new Term(coeff, thisNodeTerm.getDegree());
                     ans.data.addLast(newTerm);
                     thisNode = thisNode.getNext();
                     pNode = pNode.getNext();
+
+
                 }
-            } //while
-        }catch (Exception e){}
+            } // while
+
+            //merge the rest of the nodes until it is null
+            while(thisNode != null){
+                Term thisNodeTerm = (Term)thisNode.getData();
+                ans.data.addLast(thisNodeTerm);
+                thisNode = thisNode.getNext();
+            }
+
+            while (pNode != null){
+                Term pNodeTerm = (Term)pNode.getData();
+                ans.data.addLast(pNodeTerm);
+                pNode = pNode.getNext();
+            }
+
+        } // try
+
+        //TODO: Have it so that when the length of the string ends - then you add the rest of the nodes to the ends of the ans and it doesnt directly go to the catch block
+        //
+
+        catch (Exception e){}
         return ans;
     }
 
