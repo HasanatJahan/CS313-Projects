@@ -58,29 +58,6 @@ public class Polynomial extends AbstractPolynomial {
             //term should be the data
             Term newTerm = new Term(coeff, expo);
 
-//
-//            try {
-//                DNode current = data.getFirst();
-//
-//                boolean flag = false;
-//                while (current != null) {
-//                    Term currentTerm = (Term)current.getData();
-//                    //if the coefficients match then add the coefficient of the newTerm and the current term of iteration
-//                    if (currentTerm.getDegree() == expo) {
-//                        currentTerm.setCoefficient(coeff + currentTerm.getCoefficient());
-//                        flag = true;
-//                        break;
-//                    }
-//                    current = current.getNext();
-//                }//while
-//                //if no matching coeff is found then create a new node and add it to the end of the linkedlist
-//                if(!flag) data.addLast(newTerm);  //if there was nothing added then do not append it to the list
-//            } //end of try block
-//            //if there is no head node
-//            catch (Exception e) {
-//                data.addLast(newTerm);
-//            } //end of catch
-
             // Inserting the terms in correct order
             //if the list is empty then add it to the beginning
             if(data.isEmpty()){
@@ -104,7 +81,6 @@ public class Polynomial extends AbstractPolynomial {
                 // a match has been found
                 if(currentTerm != null){
                     //update the appropriate pointers
-//                    currentTerm = (Term) current.getData();
                     // if the coefficient matches then add the values together
                     if(currentTerm.getDegree() == newTerm.getDegree()){
                         double newCoeff = currentTerm.getCoefficient() + newTerm.getCoefficient();
@@ -118,36 +94,6 @@ public class Polynomial extends AbstractPolynomial {
                 }
             } //else
         } //for - going through each polynomial term
-
-
-//        // -- now to remove duplicates from the data polynomial linked list
-//        DNode ptr1 = null;
-//        DNode ptr2 = null;
-//
-//        try{
-//            ptr1 = data.getFirst();
-//        }catch (Exception e){}
-//
-//        //Terms
-//        Term ptr1Term = (Term)ptr1.getData();
-//        Term ptr2Term;
-//
-//        while(ptr1Term != null){
-//            ptr2 = ptr1.getNext();
-//            ptr2Term = (Term)ptr2.getData();
-//            while(ptr2Term != null){
-//                ptr1Term = (Term)ptr1.getData();
-//                if(ptr1Term.getDegree() == ptr2Term.getDegree()){
-//                    ptr1Term.setCoefficient(ptr1Term.getCoefficient() + ptr2Term.getCoefficient());
-//                    ptr2.setNext(ptr2.getNext().getNext());
-//                }else {
-//                    ptr2 = ptr2.getNext();
-//                }
-//                ptr2Term = (Term) ptr2.getData();
-//            }// inner while - ptr2
-//            ptr1 = ptr1.getNext();
-//            ptr1Term = (Term) ptr1.getData();
-//        } // outer while - ptr1
 
     }//constructor
 
@@ -277,6 +223,7 @@ public class Polynomial extends AbstractPolynomial {
 
     public AbstractPolynomial multiply(AbstractPolynomial p) {
         AbstractPolynomial ans = new Polynomial();
+        AbstractPolynomial tempAns = new Polynomial(); // temporary polynomial to keep the multiply details
         DNode thisNode = null;
         DNode pNode = null;
         double newCoeff;
@@ -301,10 +248,10 @@ public class Polynomial extends AbstractPolynomial {
                 newCoeff = thisNodeTerm.getCoefficient() * pNodeTerm.getCoefficient();
                 newExpo = thisNodeTerm.getDegree() + pNodeTerm.getDegree();
                 newTerm = new Term(newCoeff, newExpo);
-                ans.data.addLast(newTerm);
+                tempAns.data.addLast(newTerm);
                 pNode = pNode.getNext();
                 pNodeTerm = (Term) pNode.getData();
-            }
+            } //inner while - pNodeTerm
             thisNode = thisNode.getNext();
             thisNodeTerm = (Term) thisNode.getData();
 
@@ -314,56 +261,53 @@ public class Polynomial extends AbstractPolynomial {
                 pNode = p.data.getFirst();
             } catch (Exception e) {}
             pNodeTerm = (Term) pNode.getData();
+        } //outer while - thisNodeTerm
+
+        // take the answers from tempAns polynomial and add it to the final ans polynomial
+        DNode tempCurrent = null;
+        try {
+            tempCurrent = tempAns.data.getFirst();
         }
+        catch (Exception e){}
+        Term tempCurrentTerm = (Term) tempCurrent.getData();
+        // adding the nodes in correct order - iterate through the temp polynomial
+        while(tempCurrentTerm != null) {
+            //if the list is empty then add it to the beginning
+            if (ans.data.isEmpty()) {
+                ans.data.addLast(tempCurrentTerm); //this should add the item on the tempAns
+            } else {
+                current = null;
+                Term currentTerm; //represents the currentTerm in the final ans polynomial
+                // try to get the first term if it exits
+                try {
+                    current = ans.data.getFirst();
+                } catch (Exception e) {}
+                currentTerm = (Term) current.getData();
 
-        // ------------------------------------------------------------------- //
-//        // Now to remove all the duplicates from the resulting ans linked list and merge it together
-//        DNode ptr1 = null;
-//        DNode ptr2 = null;
-//        try {
-//            ptr1 = ans.data.getFirst();
-//        }
-//        catch (Exception e){}
-//
-//        // these are the terms
-//        Term ptr1Term = (Term) ptr1.getData();
-//        Term ptr2Term;
-//        // this finds a first pointer
-//        while( ptr1Term != null ){
-//            ptr2 = ptr1.getNext();
-//            ptr2Term = (Term) ptr2.getData();
-//            while( ptr2Term != null ){
-//                ptr1Term = (Term) ptr1.getData();
-//                if( ptr1Term.getDegree() == ptr2Term.getDegree()){
-//                    ptr1Term.setCoefficient(ptr1Term.getCoefficient() + ptr2Term.getCoefficient());
-//                    ptr2.setNext(ptr2.getNext().getNext()); // the next next term
-//                }
-//                else{
-//                    ptr2 = ptr2.getNext();
-//                }
-//                ptr2Term = (Term) ptr2.getData();
-//            } //while - ptr2
-//            ptr1 = ptr1.getNext();
-//            ptr1Term = (Term)ptr1.getData();
-//        } //while - ptr1
+                // traverse through the list and find the best insertion point
+                while (currentTerm != null && (currentTerm.getDegree() > tempCurrentTerm.getDegree())) {
+                    current = current.getNext();
+                    currentTerm = (Term) current.getData();
+                } // traversing through the ans polynomial
+                // a match has been found
+                if (currentTerm != null) {
+                    // if the coefficient matches then add the values together
+                    if (currentTerm.getDegree() == tempCurrentTerm.getDegree()) {
+                        double tempCoeff = currentTerm.getCoefficient() + tempCurrentTerm.getCoefficient();
+                        currentTerm.setCoefficient(tempCoeff);
+                    } else { //else append it after
+                        current = current.getPrev();
+                        ans.data.addAfter(tempCurrentTerm, current);
+                    }
+                } else {
+                    ans.data.addLast(tempCurrentTerm);
+                }
 
-        // TODO: create a more readable and simple remove duplicates method
+                tempCurrent = tempCurrent.getNext();
+                tempCurrentTerm = (Term) tempCurrent.getData();
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        } //while - tempCurrentTerm
 
         return ans;
     } // multiply method
