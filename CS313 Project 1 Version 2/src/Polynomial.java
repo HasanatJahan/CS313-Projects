@@ -108,8 +108,6 @@ public class Polynomial extends AbstractPolynomial {
         DNode pNode = null;
         double coeff;
 
-        System.out.println("It is coming to the add method");
-
         try {
             thisNode = this.data.getFirst();
             pNode = p.data.getFirst();
@@ -166,8 +164,6 @@ public class Polynomial extends AbstractPolynomial {
         DNode thisNode = null;
         DNode pNode = null;
         double coeff;
-
-        System.out.println("It is coming to the subtract method");
 
         try {
             thisNode = this.data.getFirst();
@@ -229,8 +225,6 @@ public class Polynomial extends AbstractPolynomial {
         double newCoeff;
         int newExpo;
 
-        System.out.println("It is coming to the multiply method ");
-
         try {
             thisNode = this.data.getFirst();
             pNode = p.data.getFirst();
@@ -263,14 +257,13 @@ public class Polynomial extends AbstractPolynomial {
             pNodeTerm = (Term) pNode.getData();
         } //outer while - thisNodeTerm
 
-        // take the answers from tempAns polynomial and add it to the final ans polynomial
+        // Take the answers from tempAns polynomial and add it to the final ans polynomial to remove duplicates
         DNode tempCurrent = null;
         try {
             tempCurrent = tempAns.data.getFirst();
         }
         catch (Exception e){}
         Term tempCurrentTerm = (Term) tempCurrent.getData();
-        System.out.println("this is tempCurrentTerm at the beginning " + tempCurrentTerm);
         // adding the nodes in correct order - iterate through the temp polynomial
         while(tempCurrentTerm != null) {
             //if the list is empty then add it to the beginning
@@ -303,7 +296,7 @@ public class Polynomial extends AbstractPolynomial {
                 } else {
                     ans.data.addLast(tempCurrentTerm);
                 }
-            }
+            } //else
 
             // update the pointers
             tempCurrent = tempCurrent.getNext();
