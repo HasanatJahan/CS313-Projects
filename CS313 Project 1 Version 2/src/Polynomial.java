@@ -270,17 +270,18 @@ public class Polynomial extends AbstractPolynomial {
         }
         catch (Exception e){}
         Term tempCurrentTerm = (Term) tempCurrent.getData();
+        System.out.println("this is tempCurrentTerm at the beginning " + tempCurrentTerm);
         // adding the nodes in correct order - iterate through the temp polynomial
         while(tempCurrentTerm != null) {
             //if the list is empty then add it to the beginning
             if (ans.data.isEmpty()) {
                 ans.data.addLast(tempCurrentTerm); //this should add the item on the tempAns
+
             } else {
                 current = null;
                 Term currentTerm; //represents the currentTerm in the final ans polynomial
-                // try to get the first term if it exits
                 try {
-                    current = ans.data.getFirst();
+                    current = ans.data.getFirst(); //get the first term in ans
                 } catch (Exception e) {}
                 currentTerm = (Term) current.getData();
 
@@ -302,11 +303,11 @@ public class Polynomial extends AbstractPolynomial {
                 } else {
                     ans.data.addLast(tempCurrentTerm);
                 }
-
-                tempCurrent = tempCurrent.getNext();
-                tempCurrentTerm = (Term) tempCurrent.getData();
             }
 
+            // update the pointers
+            tempCurrent = tempCurrent.getNext();
+            tempCurrentTerm = (Term) tempCurrent.getData();
         } //while - tempCurrentTerm
 
         return ans;
