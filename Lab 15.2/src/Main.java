@@ -10,18 +10,15 @@ class Main{
         //initialize a stack to hold opening parens
         Stack<Character> stack = new Stack<Character>();
 
-        //this counts if there were any closing braces
-        int count = 0;
         //iterate through the string and add every opening brace to a stack
         for(int i = 0 ; i < str.length(); i++){
             char currChar = str.charAt(i);
             //if an opening brace
-            if(currChar == '[' || currChar == '(' || currChar == '{'){
+            if(currChar == '[' || currChar == '(' ){
                 stack.push(currChar);
             }
             //else if it is a closing brace
-            else if(currChar == ']' || currChar == ')' || currChar == '}'){
-                count++;
+            else if(currChar == ']' || currChar == ')'){
                 if(stack.empty()) return false;
                 //popped elem
                 char poppedElem = stack.pop();
@@ -30,14 +27,11 @@ class Main{
                 if(currChar == ']' && poppedElem != '[') return false;
                 // for parenthesis
                 if(currChar == ')' && poppedElem != '(') return false;
-                //for curly braces
-                if(currChar == '}' && poppedElem != '{') return false;
             }
         }//for
 
         // this is if it only has opening braces
-        if(!stack.empty() && count == 0) return false;
-
+        if(!stack.empty()) return false;
         //if it passes all the tests then it is false
         return true;
     }

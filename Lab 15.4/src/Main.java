@@ -18,7 +18,6 @@ class Main{
 
 
         //go through the string once
-        String tokens[] = expr.split(" "); // splits the string out by spaces which is not always the case
         int numOperators = 0;
         int numParens = 0;
         // go through the array once
@@ -43,10 +42,8 @@ class Main{
         Stack<Double> vals = new Stack<Double>();
 
         //iterate through the array of exprNoSpaces
-        System.out.println("This is exprNoNum " + exprNoNum);
         for(int i = 0 ; i< exprNoNum.length() ; i++){
             char elem = exprNoNum.charAt(i);
-            System.out.println("This is the elem being found " + elem);
             if(elem == '(' || elem == ' ') {} //do nothing
             else if ( elem == '+' || elem == '-' || elem == '*' || elem == '/'){
                 ops.push(elem);
