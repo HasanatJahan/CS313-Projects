@@ -1,5 +1,8 @@
 import java.util.*;
-// I used this site as a reference: https://www.geeksforgeeks.org/multiplication-of-two-polynomials-using-linked-list/
+// I mostly used geeksforgeeks for examples on the different methods and stackoverflow for regular expression help
+// https://www.geeksforgeeks.org/adding-two-polynomials-using-linked-list/
+// https://www.geeksforgeeks.org/multiplication-of-two-polynomials-using-linked-list/
+// https://stackoverflow.com/questions/36490757/regex-for-polynomial-expression
 
 public class Polynomial extends AbstractPolynomial {
     private int expo;
@@ -102,6 +105,13 @@ public class Polynomial extends AbstractPolynomial {
         super();
     }
 
+    /**
+     * Returns a polynomial that is the algebraic sum of the polynomial it is applied to (this)
+     * and the polynomial p in the parameter
+     * @param p the polynomial created based on AbstractPolynomial class
+     * @return polynomial which is a doubly linked list
+     */
+
     public AbstractPolynomial add(AbstractPolynomial p) {
         AbstractPolynomial ans = new Polynomial();
         DNode thisNode = null;
@@ -157,6 +167,13 @@ public class Polynomial extends AbstractPolynomial {
 
         return ans;
     } // add method
+
+    /**
+     * Returns a polynomial that is the algebraic difference of the polynomial it is applied to (this)
+     * and the polynomial p in the parameter
+     * @param p the polynomial created based on AbstractPolynomial class
+     * @return polynomial which is a doubly linked list
+     */
 
     public AbstractPolynomial subtract(AbstractPolynomial p) {
         AbstractPolynomial ans = new Polynomial();
@@ -217,6 +234,13 @@ public class Polynomial extends AbstractPolynomial {
         return ans;
     } //subtract method
 
+
+    /**
+     * Returns a polynomial that is the algebraic multiple of the polynomial it is applied to (this)
+     * and the polynomial p in the parameter
+     * @param p the polynomial created based on AbstractPolynomial class
+     * @return polynomial which is a doubly linked list
+     */
     public AbstractPolynomial multiply(AbstractPolynomial p) {
         AbstractPolynomial ans = new Polynomial();
         AbstractPolynomial tempAns = new Polynomial(); // temporary polynomial to keep the multiply details
