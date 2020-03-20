@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3dafdcde-5108-484a-8a22-b10adb8f36c7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lab 15.4/out/production/Lab 15.4/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab 15.4/out/production/Lab 15.4/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lab 15.4/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab 15.4/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Lab 15.2/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Lab 15.2/Main.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +36,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -65,28 +63,48 @@
       <option name="presentableId" value="Default" />
       <updated>1583600416228</updated>
     </task>
+    <task id="LOCAL-00001" summary="This matches all the test cases">
+      <created>1584479387314</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1584479387314</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="This matches all the test cases" />
+    <option name="LAST_COMMIT_MESSAGE" value="This matches all the test cases" />
+  </component>
   <component name="WindowStateProjectService">
-    <state width="1398" height="141" key="GridCell.Tab.0.bottom" timestamp="1584479300521">
+    <state x="344" y="51" key="CommitChangelistDialog2" timestamp="1584479386595">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="141" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1584479300521" />
+    <state x="344" y="51" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1584479386595" />
+    <state width="1398" height="141" key="GridCell.Tab.0.bottom" timestamp="1584479390327">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="141" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1584479390327" />
     <state width="1398" height="366" key="GridCell.Tab.0.bottom/0.23.1440.814@0.23.1440.814" timestamp="1584479102260" />
-    <state width="1398" height="141" key="GridCell.Tab.0.center" timestamp="1584479300519">
+    <state width="1398" height="141" key="GridCell.Tab.0.center" timestamp="1584479390325">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="141" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1584479300519" />
+    <state width="1398" height="141" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1584479390325" />
     <state width="1398" height="366" key="GridCell.Tab.0.center/0.23.1440.814@0.23.1440.814" timestamp="1584479102257" />
-    <state width="1398" height="141" key="GridCell.Tab.0.left" timestamp="1584479300518">
+    <state width="1398" height="141" key="GridCell.Tab.0.left" timestamp="1584479390324">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="141" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1584479300518" />
+    <state width="1398" height="141" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1584479390324" />
     <state width="1398" height="366" key="GridCell.Tab.0.left/0.23.1440.814@0.23.1440.814" timestamp="1584479102255" />
-    <state width="1398" height="141" key="GridCell.Tab.0.right" timestamp="1584479300520">
+    <state width="1398" height="141" key="GridCell.Tab.0.right" timestamp="1584479390326">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="141" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1584479300520" />
+    <state width="1398" height="141" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1584479390326" />
     <state width="1398" height="366" key="GridCell.Tab.0.right/0.23.1440.814@0.23.1440.814" timestamp="1584479102258" />
+    <state x="221" y="89" key="SettingsEditor" timestamp="1584540686434">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="221" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1584540686434" />
   </component>
 </project>
