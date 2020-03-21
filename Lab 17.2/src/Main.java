@@ -26,8 +26,11 @@ class Main {
             //Sort lists
             Collections.sort(list1); 
             Collections.sort(list2); 
-            Collections.sort(list3); 
-            
+            Collections.sort(list3);
+
+		   	System.out.println("---------------------------------------------------");
+		   	System.out.println("---------------------------------------------------");
+
 		      System.out.println("***\nintersection\n***");
 		      System.out.println(setAndMaps.intersection(list1, list2));
 
