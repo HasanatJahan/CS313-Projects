@@ -28,8 +28,12 @@ class Main {
             Collections.sort(list2); 
             Collections.sort(list3);
 
-		   	System.out.println("---------------------------------------------------");
-		   	System.out.println("---------------------------------------------------");
+            //Note: these are my tests
+		   System.out.println("My test" + setAndMaps.groupByNumChars(list3));
+
+
+		   //Note: ends
+
 
 		      System.out.println("***\nintersection\n***");
 		      System.out.println(setAndMaps.intersection(list1, list2));

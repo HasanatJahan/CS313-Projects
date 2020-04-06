@@ -11,11 +11,11 @@ public class setAndMaps {
       Set<String> intersection = new HashSet<>();
 
       if(movieList1.size() < movieList2.size() ){
-         movieList2.retainAll(movieList1);
          intersection = movieList2;
+         intersection.retainAll(movieList1);
       }else{
-         movieList1.retainAll(movieList2);
          intersection = movieList1;
+         intersection.retainAll(movieList2);
       }
 
       //create an arraylist to hold matching values
@@ -30,7 +30,7 @@ public class setAndMaps {
          result = result + "\n";
       }
       return result;
-   }
+   } //intersection method
 
    // Prints all movies in the list that occur at least k times
    public static String frequent(List<String> list, int k) { //The expected runtime must be O(nlogn) where n is the total number of movies in the list
@@ -63,7 +63,9 @@ public class setAndMaps {
       // for each elem in the list, count the num of characters
       for (String elem : list) {
          int count = 0;
-         count = elem.length();
+         for (int i = 0; i < elem.length(); i++) {
+            count++;
+         }
 
          List<String> movieNames = movieMap.get(count);
          // if list does not exist create it
