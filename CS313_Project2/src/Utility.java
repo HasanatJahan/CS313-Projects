@@ -21,13 +21,13 @@ class Utility {
     	  }
       }
       //Default test case
-//      else {
+      else {
     	  System.out.println("Default Input\n***************************");
     	  for(String word : testInput) {
 			  String keyWord = Utility.dropS(word);
 			  words.put(keyWord, word.replaceAll("[^a-zA-Z\\d ]+$", ""));
     	  }
-//      }
+      }
       //Get keys and sort list
       ArrayList<String> sortedKeys = new ArrayList<String>(words.keySet());     
       Collections.sort(sortedKeys);  

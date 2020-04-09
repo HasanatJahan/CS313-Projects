@@ -72,6 +72,4 @@ public class WordSet<K extends Comparable<K>, V> implements Counter<K, V> {
         }
 
     }
-
-      // declare any required instance variables or helpful auxiliary types and methods here
 }
