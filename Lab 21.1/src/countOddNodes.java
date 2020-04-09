@@ -1,17 +1,14 @@
 public class countOddNodes extends IntegerTree {
-    private IntegerTreeNode overallRoot;
+//    private IntegerTreeNode overallRoot;
 
     //constructors
     public countOddNodes() {
         super();
     }
 
-    // Helper method returns the overall answer after traversing the tree
-    public int oddInternalNodes(){
-        return oddInternalNodes(overallRoot);
-    } //oddInternalNode-helper
+    //NOTE: This should only return the number of odd INTERNAL nodes
 
-    // Method counts the number of odd nodes in the tree
+    // Method counts the number of odd internal nodes in the tree
     public int oddInternalNodes(IntegerTreeNode root){
         //base case
         if(root == null) {
@@ -43,8 +40,7 @@ public class countOddNodes extends IntegerTree {
     }// insertLevelOrder method
 
 
-    //Ok lets see what the tree looks like -
-    // Note: print seems to be working
+    //Method to print the tree in order
     public void printInOrder(IntegerTreeNode root){
         if(root != null){
             printInOrder(root.left);

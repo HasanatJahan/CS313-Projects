@@ -7,23 +7,24 @@ public class Main {
         int [] numArr = new int[2000];
         int count = 0;
         boolean isDefault = false; //flag to check if default case has been used
-        countOddNodes binaryTree = new countOddNodes();
+        countOddNodes binaryTree = new countOddNodes(); //define the integernodetree to countOddNodes
 
         //Custom Test Case
-
-//        if(scnr.hasNext()){
-//            //first count the number of inputs and add each to an array
-//            count++;
-//            numArr[count] = scnr.nextInt();
-//        }
-//        // default test case to populate the output
-//        else {
+        if(scnr.hasNext()){
+            //first count the number of inputs and add each to an array
+            while (scnr.hasNext()){
+                numArr[count] = scnr.nextInt();
+                ++count;
+            }
+        }
+        // default test case to populate the output
+        else {
             //Variables
             int [] defaultArr = {33,45,2,21,46,3,1,32,11,211,10};
             //go through the array and define the tree
             binaryTree.setRoot(binaryTree.insertLevelOrder(defaultArr, binaryTree.getRoot(), 0));
             isDefault = true;
-//        } //else
+        } //else
 
         //do the custom case to populate the binary tree if not the default input
         if(!isDefault){
@@ -35,14 +36,11 @@ public class Main {
 
             //now to perform tree population
             binaryTree.setRoot(binaryTree.insertLevelOrder(inputArr, binaryTree.getRoot(), 0));
-
         } //isDefault
 
 
         //now to run the function
-        binaryTree.printInOrder(binaryTree.getRoot());
-        System.out.println();
-        System.out.println("This the count of odd nodes " + binaryTree.oddInternalNodes(binaryTree.getRoot()));
+        System.out.println(binaryTree.oddInternalNodes(binaryTree.getRoot()));
 
     }
 }
