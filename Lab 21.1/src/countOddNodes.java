@@ -1,12 +1,17 @@
 public class countOddNodes extends IntegerTree {
-//    private IntegerTreeNode overallRoot;
 
     //constructors
     public countOddNodes() {
         super();
     }
 
-    //NOTE: This should only return the number of odd INTERNAL nodes
+    // Helper method to check if it's a internal node
+    boolean isInternal(IntegerTreeNode node){
+        boolean isInternal = false;
+        if(node.left != null) isInternal = true;
+        if(node.right != null) isInternal = true;
+        return isInternal;
+    }
 
     // Method counts the number of odd internal nodes in the tree
     public int oddInternalNodes(IntegerTreeNode root){
@@ -14,13 +19,15 @@ public class countOddNodes extends IntegerTree {
         if(root == null) {
             return 0;
         }
-        else if( root.data % 2 != 0 ){
+        //an internal node must have a child - a leaf would be a root with left and right pointing to null
+        else if( root.data % 2 != 0 && isInternal(root) ){
             return 1 + oddInternalNodes(root.left) + oddInternalNodes(root.right);
         }
         else{
             return oddInternalNodes(root.left) + oddInternalNodes(root.right);
         }
     } //oddInternalNode
+
 
 
     // Used reference: https://www.geeksforgeeks.org/construct-complete-binary-tree-given-array/

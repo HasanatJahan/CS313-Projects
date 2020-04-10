@@ -10,21 +10,21 @@ public class Main {
         countOddNodes binaryTree = new countOddNodes(); //define the integernodetree to countOddNodes
 
         //Custom Test Case
-        if(scnr.hasNext()){
-            //first count the number of inputs and add each to an array
-            while (scnr.hasNext()){
-                numArr[count] = scnr.nextInt();
-                ++count;
-            }
-        }
-        // default test case to populate the output
-        else {
+//        if(scnr.hasNext()){
+//            //first count the number of inputs and add each to an array
+//            while (scnr.hasNext()){
+//                numArr[count] = scnr.nextInt();
+//                ++count;
+//            }
+//        }
+//        // default test case to populate the output
+//        else {
             //Variables
-            int [] defaultArr = {33,45,2,21,46,3,1,32,11,211,10};
+            int [] defaultArr = {33, 45, 2, 21, 46, 2, 2, 2, 3, 1, 32, 11, 211, 10}; //this should return 5
             //go through the array and define the tree
             binaryTree.setRoot(binaryTree.insertLevelOrder(defaultArr, binaryTree.getRoot(), 0));
             isDefault = true;
-        } //else
+//        } //else
 
         //do the custom case to populate the binary tree if not the default input
         if(!isDefault){
@@ -38,7 +38,8 @@ public class Main {
             binaryTree.setRoot(binaryTree.insertLevelOrder(inputArr, binaryTree.getRoot(), 0));
         } //isDefault
 
-
+        binaryTree.printInOrder(binaryTree.getRoot());
+        System.out.println();
         //now to run the function
         System.out.println(binaryTree.oddInternalNodes(binaryTree.getRoot()));
 
