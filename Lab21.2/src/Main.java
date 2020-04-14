@@ -13,20 +13,33 @@ public class Main {
         int count1 = 0;
         int count2 = 0;
 
+        //Reference: https://stackoverflow.com/questions/18838781/converting-string-array-to-an-integer-array
         //Custom Test Case
-        if(scnr.hasNext()){
-            while (scnr.hasNext()){
-                numArr1[count1] = scnr.nextInt();
-                count1++;
-            }
-            //Writes to list if input exists
-            if(scnr.hasNext())
-                while(scnr.hasNext()){
-                    numArr2[count2] = scnr.nextInt();
-                    count2++;
-                }
+        String [] stringsArr;
+        String userInput;
+        int trackerNum = 1;
 
-        }
+        if(scnr.hasNext()){
+            while(scnr.hasNext()){
+                userInput = scnr.nextLine();
+
+                stringsArr = userInput.split(" ");
+
+                if(trackerNum == 1){
+                    for(int i = 0; i < stringsArr.length; i++){
+                        numArr1[i] = Integer.valueOf(stringsArr[i]);
+                        count1++;
+                    }
+                    trackerNum++; //modify the trackerNum
+                }
+                else {
+                    for(int i = 0; i < stringsArr.length; i++){
+                        numArr2[i] = Integer.valueOf(stringsArr[i]);
+                        count2++;
+                    }
+                }
+            } //while
+        } //if
 
         else{
             //Default Arrays
@@ -37,18 +50,27 @@ public class Main {
             //create two trees from the default array
             tree1.setRoot(tree1.insertLevelOrder(defaultArr1, tree1.getRoot(), 0));
             tree2.setRoot(tree2.insertLevelOrder(defaultArr2, tree2.getRoot(), 0));
-        }
+        } //else
 
-        if(!isDefault){
+
+        if( !isDefault ){
+            System.out.println("Is it coming here");
+            System.out.println("count1 " + count1);
+            System.out.println("count2 " + count2);
+
             Integer[] inputArr1 = new Integer[count1];
             Integer[] inputArr2 = new Integer[count2];
             //populate the input arrays
             for(int i = 0; i < count1; i++){
+                System.out.println("what about the first for loop ");
                 inputArr1[i] = numArr1[i];
+                System.out.println("This is inputArr1 item " + i + " " + inputArr1[i] );
             }
 
             for(int i = 0; i < count2; i++){
-                inputArr1[i] = numArr1[i];
+                System.out.println("what about the first for loop ");
+                inputArr2[i] = numArr2[i];
+                System.out.println("This is inputArr2 item " + i + " " + inputArr2[i] );
             }
 
             //create two trees from the input
@@ -56,7 +78,6 @@ public class Main {
             tree2.setRoot(tree2.insertLevelOrder(inputArr2, tree2.getRoot(), 0));
 
         }
-
 
 
         // testing

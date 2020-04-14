@@ -28,13 +28,13 @@ public class MatchTree <T extends Comparable<T>> extends Tree <T>{
         }
     } //printInOrder
 
+    //Reference: https://www.geeksforgeeks.org/print-binary-tree-2-dimensions/
     // Function to print binary tree in 2D
     static final int COUNT = 10;
-// It does reverse inorder traversal
+    // It does reverse inorder traversal
     public void print2DUtil(TreeNode root, int space){
         // Base case
-        if (root == null)
-            return;
+        if (root == null) return;
 
         // Increase distance between levels
         space += COUNT;
@@ -54,28 +54,7 @@ public class MatchTree <T extends Comparable<T>> extends Tree <T>{
     }
 
 
-    // Resource: https://www.geeksforgeeks.org/get-level-of-a-node-in-a-binary-tree/
-//    public int getLevel(TreeNode node, T data, int level){
-//        //base case
-//        if(node == null) return 0;
-//        if(node.data.equals(data)) return level;
-//
-//        //check in left subtree
-//        int downLevel = getLevel(node.left, data, level + 1);
-//        if(downLevel != 0) return downLevel;
-//
-//        //check right
-//        downLevel = getLevel(node.right, data, level + 1);
-//        return downLevel;
-//    }
-
-    //Note: a helper method to check the two values
     // Reference: https://www.geeksforgeeks.org/print-common-nodes-in-two-binary-search-trees/
-    //Note: 1. must handle generic types
-    // A match is in the same position in the tree relative to the root
-    // They store the same data
-
-    //Note: my plan is to iterate both trees in preorder
     public int matches(TreeNode<T> root1, TreeNode<T> root2){
         //base case
         if(root1 == null || root2 == null) return 0;
