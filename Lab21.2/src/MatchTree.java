@@ -55,7 +55,7 @@ public class MatchTree <T extends Comparable<T>> extends Tree <T>{
 
 
     // Reference: https://www.geeksforgeeks.org/print-common-nodes-in-two-binary-search-trees/
-    public int matches(TreeNode<T> root1, TreeNode<T> root2){
+    private int matches(TreeNode<T> root1, TreeNode<T> root2){
         //base case
         if(root1 == null || root2 == null) return 0;
         else if(root1.data.equals(root2.data)){
@@ -64,5 +64,64 @@ public class MatchTree <T extends Comparable<T>> extends Tree <T>{
         else {
             return matches(root1.left, root2.left) + matches(root1.right, root2.right);
         }
-    }
-}
+    } //matches- private two parameters
+
+    //method with one parameter
+    public int matches (TreeNode<T> root2){
+        return matches(this.getRoot(),root2);
+    }//matches - one parameter
+
+
+    //    //This should return the number of matches in the tree
+    //    public int matches(TreeNode<T> root2) {
+    //        //this keeps the count of the matches
+    //        int count = 0;
+    //        TreeNode<T> root1 = this.getRoot();
+    //        //base case
+    //        if (root1 == null || root2 == null) {
+    //            return 0;
+    //        }
+    //
+    //        //create two stacks to store the nodes from both trees
+    //        Stack<TreeNode<T>> stack1 = new Stack<TreeNode<T>>();
+    //        Stack<TreeNode<T>> stack2 = new Stack<TreeNode<T>>();
+    //
+    //        //variables to store data to make comparison
+    //        T data1;
+    //        T data2;
+    //
+    //        while (true) {
+    //            //root1 traversal to populate stack1
+    //            while (root1 != null) {
+    //                stack1.push(root1);
+    //                root1 = root1.left; //left first
+    //            }//root1 traversal
+    //
+    //            //root2 traversal to populate stack2
+    //            while (root2 != null) {
+    //                stack2.push(root2);
+    //                root2 = root2.left;
+    //            }//root2 traversal
+    //
+    //            if (stack1.empty() || stack2.empty()) break; //to break out true while loop
+    //
+    //            data1 = stack1.peek().data;
+    //            data2 = stack2.peek().data;
+    //
+    //            //this checks if they are the same
+    //            if (data1.equals(data2)) {
+    ////                if (this.getLevel(data1, 0) == this.getLevel(data2, 0)) {
+    ////                    count++;
+    ////                }
+    //                count++; //increment the count
+    //                root1 = stack1.peek().right;
+    //                root2 = stack2.peek().right;
+    //                stack1.pop();
+    //                stack2.pop();
+    //            }// if checking
+    //        } //while true
+    //        return count;
+    //    }
+
+
+} //MatchTree Class

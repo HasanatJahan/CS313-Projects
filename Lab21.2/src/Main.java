@@ -1,5 +1,7 @@
 import java.util.*;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
+
 public class Main {
     public static void main (String [] args) {
         Scanner scnr = new Scanner(System.in);
@@ -19,29 +21,29 @@ public class Main {
         String userInput;
         int trackerNum = 1;
 
-        if(scnr.hasNext()){
-            while(scnr.hasNext()){
-                userInput = scnr.nextLine();
+//        if(scnr.hasNext()){
+//            while(scnr.hasNext()){
+//                userInput = scnr.nextLine();
+//
+//                stringsArr = userInput.split(" ");
+//
+//                if(trackerNum == 1){
+//                    for(int i = 0; i < stringsArr.length; i++){
+//                        numArr1[i] = Integer.valueOf(stringsArr[i]);
+//                        count1++;
+//                    }
+//                    trackerNum++; //modify the trackerNum
+//                }
+//                else {
+//                    for(int i = 0; i < stringsArr.length; i++){
+//                        numArr2[i] = Integer.valueOf(stringsArr[i]);
+//                        count2++;
+//                    }
+//                }
+//            } //while
+//        } //if
 
-                stringsArr = userInput.split(" ");
-
-                if(trackerNum == 1){
-                    for(int i = 0; i < stringsArr.length; i++){
-                        numArr1[i] = Integer.valueOf(stringsArr[i]);
-                        count1++;
-                    }
-                    trackerNum++; //modify the trackerNum
-                }
-                else {
-                    for(int i = 0; i < stringsArr.length; i++){
-                        numArr2[i] = Integer.valueOf(stringsArr[i]);
-                        count2++;
-                    }
-                }
-            } //while
-        } //if
-
-        else{
+//        else{
             //Default Arrays
             Integer [] defaultArr1 = {33,45,2,21,46,3,1,32,11,211,10},
                     defaultArr2 = {32,46,3,21,45,2,1,31,47,11,211,10};
@@ -50,27 +52,20 @@ public class Main {
             //create two trees from the default array
             tree1.setRoot(tree1.insertLevelOrder(defaultArr1, tree1.getRoot(), 0));
             tree2.setRoot(tree2.insertLevelOrder(defaultArr2, tree2.getRoot(), 0));
-        } //else
+//        } //else
 
 
         if( !isDefault ){
-            System.out.println("Is it coming here");
-            System.out.println("count1 " + count1);
-            System.out.println("count2 " + count2);
 
             Integer[] inputArr1 = new Integer[count1];
             Integer[] inputArr2 = new Integer[count2];
             //populate the input arrays
             for(int i = 0; i < count1; i++){
-                System.out.println("what about the first for loop ");
                 inputArr1[i] = numArr1[i];
-                System.out.println("This is inputArr1 item " + i + " " + inputArr1[i] );
             }
 
             for(int i = 0; i < count2; i++){
-                System.out.println("what about the first for loop ");
                 inputArr2[i] = numArr2[i];
-                System.out.println("This is inputArr2 item " + i + " " + inputArr2[i] );
             }
 
             //create two trees from the input
@@ -91,7 +86,7 @@ public class Main {
         System.out.println();
         tree2.print2DUtil(tree2.getRoot(), 0);
         //testing the matches
-        System.out.println("The number of matches is " + tree1.matches(tree1.getRoot(), tree2.getRoot()));
+        System.out.println("The number of matches is " + tree1.matches(tree2.getRoot()));
 
     }
 }
