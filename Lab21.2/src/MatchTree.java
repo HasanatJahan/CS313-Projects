@@ -71,7 +71,6 @@ public class MatchTree <T extends Comparable<T>> extends Tree <T>{
         return matches(this.getRoot(),root2);
     }//matches - one parameter
 
-
     //    //This should return the number of matches in the tree
     //    public int matches(TreeNode<T> root2) {
     //        //this keeps the count of the matches
