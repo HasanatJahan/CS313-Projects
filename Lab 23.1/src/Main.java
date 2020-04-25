@@ -15,13 +15,6 @@ public class Main {
         HeapSort<Integer> heapSort = new HeapSort<>();
         heapSort.buildMaxHeap(boxedArray);
 
-        //-----------------------
-        System.out.println("This is what the maxHeap looks like " + boxedArray);
-        for(int i = 0; i< boxedArray.length; i++){
-            System.out.print(boxedArray[i] + " ");
-        }
-        //---------------------
-
         // There's levels to this heap.
         System.out.println(heapSort.levelMap(boxedArray).toString().replace("],", "],\n") + "\n");
 
