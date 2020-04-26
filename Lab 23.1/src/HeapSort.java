@@ -22,9 +22,6 @@ public class HeapSort<T extends Comparable <T>> extends AbstractHeapSort<T> {
     int right(int i){
         return 2 * i + 2;
     }
-    int parent(int i){
-        return (i - 1)/2;
-    }
 
     // Used resource: https://www.hackerearth.com/practice/notes/heaps-and-priority-queues/
     // Resource: https://www.geeksforgeeks.org/level-order-tree-traversal/
@@ -37,35 +34,34 @@ public class HeapSort<T extends Comparable <T>> extends AbstractHeapSort<T> {
         //resource: https://www.geeksforgeeks.org/print-level-order-traversal-line-line/
         LinkedHashMap<Integer, LinkedList<T>> treeLevels = new LinkedHashMap<Integer, LinkedList<T>>();
         Queue<T> queue = new LinkedList<>();
-        queue.add(arr[0]); //add the root
+        queue.add(arr[0]); //add the root to make nodeCount 1
+
         int level = 0;
-
-        double traversalLevel = Math.log(arr.length) / Math.log(2);
-
-        while (level < traversalLevel){
+        int i = 0; //this tracks of node number
+        while(true){
+            //number of nodes at the current level
+            int nodeCount = queue.size(); //this shows the count
+            if(nodeCount == 0 ) break; //the other statement was nodeCount >= arr.length ||||  i >= arr.length
             LinkedList <T> nodes = new LinkedList<>(); //create the list yet again
 
-            while(!queue.isEmpty()){
-                //new linked list at each level
-
-                T tempNode = queue.poll(); //this removes the current element
-                //now add the temp node to the linked list
-                nodes.add(tempNode);
-
-                if(left(level) < arr.length){
-                    queue.add(arr[left(level)]);
+            //this should differentiate between the levels
+            while(nodeCount > 0){ //while there is still an element in the queue
+                T tempNode = queue.peek(); //the front element in the front of queue
+                nodes.add(tempNode); //add the node to the linked list
+                queue.remove(); //this removes the head of the queue
+                //now to add the nodes of the next level from the left subtree and the right subtree
+                if(left(i) < arr.length){
+                    queue.add(arr[left(i)]);
                 }
-
-                if (right(level) < arr.length){
-                    queue.add(arr[right(level)]);
+                if(right(i) < arr.length){
+                    queue.add(arr[right(i)]);
                 }
-
-            }
-            level++; //increase the level
-            treeLevels.put(level, nodes);
-        }
-
-
+                i++;
+                nodeCount--;
+            } //while - inner
+            treeLevels.put(level, nodes); //create the tree
+            level++;
+        } //while - outer
         return treeLevels;
     }
 
