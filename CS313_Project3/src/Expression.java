@@ -13,8 +13,18 @@ public class Expression extends ExpressionTree {
     // Deal with the easier case when there are no parentheses first. Once you accomplish this you can finish quickly using a recursion
 
     public Expression(String s) {
+        //Note: The constructor should turn an input expression into the content of a binary (expression) tree.
+        // The constructor should deal with expression without parenthesis
+        // Adapt the constructor to deal with parenthesis - using a stack
         super();
-        // add implementation here
+
+        //remove all the spaces in the expression
+        s = s.replaceAll("\\s", "");
+
+        //let's first do the expression evaluation
+        //define an expression tree by reading the expression
+
+
     }
 
     //NOTE: The evaluate should be straight forward; it builds upon previous work you have done in this class.

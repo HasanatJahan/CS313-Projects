@@ -20,5 +20,4 @@ abstract class ExpressionTree extends BinaryTree<String> {
     }
 
     public abstract double evaluate();
-
 }
