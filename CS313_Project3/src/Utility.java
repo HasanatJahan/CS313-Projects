@@ -6,33 +6,33 @@ class Utility {
         boolean eval = false;
         String testInput = "";
         //Grab eval flag
-        if(scnr.hasNext()){
-            try{
-                eval = scnr.nextBoolean();
-                scnr.nextLine();
-            }
-            catch(Exception ex){
-                System.out.println("Improper input\n" + ex);
-            }
-            while(scnr.hasNext()){
-                try{
-                    testInput = scnr.nextLine();
-                    expr = new Expression(testInput);
-                    print(expr);
-                    if(eval)
-                        System.out.println("Evaluated: " + expr.evaluate() + "\n");
-                }
-                catch(Exception ex){
-                    System.out.println("Improper input\n" + ex);
-                }
-            }
-        }
-        else{
+//        if(scnr.hasNext()){
+//            try{
+//                eval = scnr.nextBoolean();
+//                scnr.nextLine();
+//            }
+//            catch(Exception ex){
+//                System.out.println("Improper input\n" + ex);
+//            }
+//            while(scnr.hasNext()){
+//                try{
+//                    testInput = scnr.nextLine();
+//                    expr = new Expression(testInput);
+//                    print(expr);
+//                    if(eval)
+//                        System.out.println("Evaluated: " + expr.evaluate() + "\n");
+//                }
+//                catch(Exception ex){
+//                    System.out.println("Improper input\n" + ex);
+//                }
+//            }
+//        }
+//        else{
             expr = new Expression("5 + 6 * 7");
             print(expr);
             if(eval)
                 System.out.println("Evaluated: " + expr.evaluate() + "\n");
-        }
+//        }
     }
 
     public static String getInput() {
