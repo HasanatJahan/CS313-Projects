@@ -7,18 +7,39 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Expression extends ExpressionTree {
-//    BNode root;
 
-    //NOTE: The fullyParenthesised method can also be done using a recursion.
-    // This will require an auxiliary recursive method to call on.
     public String fullyParenthesised() {
-        // add implementation here
+//        return fullyParenthesised((BNode) this.root);
         return "";
     }
 
-    // Deal with the easier case when there are no parentheses first.
-    // Once you accomplish this you can finish quickly using a recursion
-    //Reference: https://github.com/Tacuma/Infix-to-Expression-Tree/blob/master/Infix-to-Expression-Tree/infixtotree.cpp
+    // NOTE:   THIS IS WHAT I WAS WORKING ON
+    public String fullyParenthesised(BNode node){
+//        // note: you only need parenthesis around the children
+//        String result = "";
+//
+//        if(node == null){
+//            result = "";
+//        }
+//
+//        if( null == node.getLeft()  && null == node.getRight()){
+//            result +=  node.data;
+//        }
+//
+//        result += "(";
+//        fullyParenthesised(node.getLeft());
+//        result += ")";
+//
+//        if(node.getRight() != null){
+//            result += "(";
+//            fullyParenthesised(node.getRight());
+//            result += ")";
+//        }
+//
+//        return result;
+        return "";
+    } // fullyParenthesised -- helper
+
 
     public Expression(String s) {
         super();
@@ -322,16 +343,31 @@ public class Expression extends ExpressionTree {
     } // infixToPrefix
 
 
-
-
-    //Note : Dijkstra's two-stack algorithm for expression evaluation
-    // Reference: https://stackoverflow.com/questions/37110903/dijkstras-two-stack-algorithm-for-expression-evaluation
-    // Reference: https://www.geeksforgeeks.org/expression-tree/
-    //NOTE: The evaluate should be straight forward; it builds upon previous work you have done in this class.
+    // Reference: https://www.geeksforgeeks.org/evaluation-of-expression-tree/
     public double evaluate() {
-        // add implementation here
-        return 0.0;
+        return evaluate((BNode) root);
     }
 
-    //NOTE: write any other methods that you think might be helpful
+    private double evaluate(BNode node){
+        if( root == null ) return 0.0;
+        if ( null == node.getRight() && null == node.getLeft()){
+            return Double.parseDouble((String) node.data);
+        }
+        double leftVal = evaluate(node.getLeft());
+        double rightVal = evaluate(node.getRight());
+
+        if(node.data.equals("+")){
+            return leftVal + rightVal;
+        }
+        if(node.data.equals("-")){
+            return leftVal - rightVal;
+        }
+        if(node.data.equals("*")){
+            return leftVal * rightVal;
+        }
+
+        return leftVal / rightVal;
+
+    } //evaluate -  helper
+
 }

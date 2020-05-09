@@ -30,6 +30,11 @@ class Utility {
 //        else{
             expr = new Expression("5 + 6 * 7");
             print(expr);
+
+            //note: my test
+            System.out.println(expr.evaluate());
+
+
             if(eval)
                 System.out.println("Evaluated: " + expr.evaluate() + "\n");
 //        }
