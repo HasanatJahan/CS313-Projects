@@ -8,37 +8,47 @@ import java.util.regex.Pattern;
 
 public class Expression extends ExpressionTree {
 
+    // Reference: http://penguin.ewu.edu/cscd300/Topic/ExpressionTree/ExpressionTree.java
     public String fullyParenthesised() {
-//        return fullyParenthesised((BNode) this.root);
-        return "";
+        String result = "";
+        return fullyParenthesised((BNode) this.root, result);
     }
 
-    // NOTE:   THIS IS WHAT I WAS WORKING ON
-    public String fullyParenthesised(BNode node){
-//        // note: you only need parenthesis around the children
-//        String result = "";
-//
-//        if(node == null){
-//            result = "";
-//        }
-//
-//        if( null == node.getLeft()  && null == node.getRight()){
-//            result +=  node.data;
-//        }
-//
-//        result += "(";
-//        fullyParenthesised(node.getLeft());
-//        result += ")";
-//
-//        if(node.getRight() != null){
-//            result += "(";
-//            fullyParenthesised(node.getRight());
-//            result += ")";
-//        }
-//
-//        return result;
-        return "";
+    private String fullyParenthesised(BNode node, String result){
+        if(node != null){
+            if(!isLeaf(node)){
+                result += "(" ;
+            }
+            result = fullyParenthesised(node.getLeft(), result) + " " + node.data + " ";
+            result = fullyParenthesised(node.getRight(), result) ;
+            if(!isLeaf(node)){
+                result += ")" ;
+            }
+        }
+        return result;
     } // fullyParenthesised -- helper
+
+
+    public void printInfix(){
+        printInfix((BNode) this.root);
+    }
+
+    private void printInfix(BNode node){
+        if(node != null){
+            if(!isLeaf(node)){
+                System.out.print("( ");
+            }
+            printInfix(node.getLeft());
+            System.out.print(node.data + " ");
+            printInfix(node.getRight());
+            if(!isLeaf(node)){
+                System.out.print(") ");
+            }
+        }
+
+    }
+
+
 
 
     public Expression(String s) {
@@ -72,7 +82,7 @@ public class Expression extends ExpressionTree {
         // build the tree
         BNode<String> expressionRoot = buildTree(postfixList);
 
-        //now set the expression tree
+        // now set the expression tree root
         this.root = expressionRoot;
 
     } //constructor
@@ -239,110 +249,6 @@ public class Expression extends ExpressionTree {
     } //getPriority
 
 
-    // References: https://www.geeksforgeeks.org/infix-to-prefix-conversion-using-two-stacks/
-    private ArrayList<Character> infixToPrefix(ArrayList<Character> infix){
-        ArrayList<Character> result = new ArrayList<>();
-        //stack for the operators
-        Stack<Character> operators = new Stack<>();
-        //stack for the number and previous expression held
-        Stack<String> operands = new Stack<>();
-
-        //go through the infix expression and populate the prefix ArrayList
-        for ( int i = 0; i< infix.size(); i++ ){
-            Character currentChar = infix.get(i);
-            if(currentChar == '('){
-                operators.push(currentChar);
-            }
-            else if(currentChar == '*' || currentChar == '/' || currentChar == '+' || currentChar == '-'){
-                operators.push(currentChar);
-            }
-            else if(currentChar == ')'){
-                while( !operators.empty() && operators.peek() != '(' ){
-                    //take the two operands
-                    String op1 = operands.peek();
-                    operands.pop();
-                    String op2 = operands.peek();
-                    operands.pop();
-                    //now get the latest operator
-                    Character usedOp = operators.peek();
-                    operators.pop();
-
-                    String temp = usedOp + " " + op2 + " " + op1;
-                    operands.push(temp);
-                }
-                //now pop the opening bracket
-                operators.pop();
-            }
-
-            // if it's not an operator
-            else if(currentChar != '*' || currentChar != '/' || currentChar != '+' || currentChar != '-'){
-                // convert the char to a string
-                String currentStr = Character.toString(currentChar);
-                operands.push(currentStr);
-            }
-
-            //if it is an operator
-            // push this operator from the stack after popping the operators that have a higher priority
-            else{
-                while (!operators.empty() && getPriority(currentChar) <= getPriority(operators.peek())){
-                    //take the two operands
-                    String op1 = operands.peek();
-                    operands.pop();
-                    String op2 = operands.peek();
-                    operands.pop();
-                    //now get the latest operator
-                    Character usedOp = operators.peek();
-                    operators.pop();
-
-                    String temp = usedOp + " " + op2 + " " + op1;
-                    operands.push(temp);
-                }
-                //now push the current operator
-                operators.push(currentChar);
-            }//else
-        } //main for loop
-
-        //if operators stack is not empty
-        while (!operators.empty()){
-            //take the two operands
-            String op1 = operands.peek();
-            operands.pop();
-            String op2 = operands.peek();
-            operands.pop();
-            //now get the latest operator
-            Character usedOp = operators.peek();
-            operators.pop();
-
-            String temp = usedOp + " " +op2 + " " + op1;
-            operands.push(temp);
-        }
-
-        //--- populate the resulting arraylist
-        String resultStr = operands.peek();
-        //this takes out all the numbers
-        String resultStrNoNum = resultStr.replaceAll("(\\d+(?:\\.\\d+)?)", "d").replace(".", "").replace(" ", "");
-
-        //let's do the pattern checking to find all the numbers
-        Pattern numRegex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
-        //this matches the pattern with all the numbers in the expression
-        Matcher matcher = numRegex.matcher(resultStr);
-
-        for (int i = 0 ; i < resultStrNoNum.length(); i++){
-            char elem = resultStrNoNum.charAt(i);
-            if(elem == 'd'){
-                if(matcher.find()){
-                    String numVal = matcher.group();
-                    result.add(numVal.charAt(0));
-                }
-            }else{
-                result.add(elem);
-            }
-        } //ending for
-
-        return result;
-    } // infixToPrefix
-
-
     // Reference: https://www.geeksforgeeks.org/evaluation-of-expression-tree/
     public double evaluate() {
         return evaluate((BNode) root);
@@ -353,6 +259,7 @@ public class Expression extends ExpressionTree {
         if ( null == node.getRight() && null == node.getLeft()){
             return Double.parseDouble((String) node.data);
         }
+        // get the leaves which are the values
         double leftVal = evaluate(node.getLeft());
         double rightVal = evaluate(node.getRight());
 
