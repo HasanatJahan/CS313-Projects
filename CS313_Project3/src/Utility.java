@@ -28,7 +28,7 @@ class Utility {
 //            }
 //        }
 //        else{
-            expr = new Expression("5 + 6 * 7");
+            expr = new Expression("8 * 16 / 5 + (2 - (3 - 6))");
             print(expr);
             if(eval)
                 System.out.println("Evaluated: " + expr.evaluate() + "\n");

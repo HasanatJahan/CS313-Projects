@@ -6,6 +6,13 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The ExpressionTree program implements an expression tree from
+ * input infix expression.
+ *
+ * @author  Hasanat Jahan
+ */
+
 public class Expression extends ExpressionTree {
 
     // Reference: http://penguin.ewu.edu/cscd300/Topic/ExpressionTree/ExpressionTree.java
@@ -19,7 +26,7 @@ public class Expression extends ExpressionTree {
             if(!isLeaf(node)){
                 result += "(" ;
             }
-            result = fullyParenthesised(node.getLeft(), result) + " " + node.data + " ";
+            result = fullyParenthesised(node.getLeft(), result) + node.data ;
             result = fullyParenthesised(node.getRight(), result) ;
             if(!isLeaf(node)){
                 result += ")" ;
@@ -49,14 +56,19 @@ public class Expression extends ExpressionTree {
     }
 
 
-
-
     public Expression(String s) {
         super();
 
         //remove all the spaces in the expression
         String sNoSpaces = s.replaceAll("\\s", "");
-        ArrayList<Character> expression= new ArrayList<Character>();
+
+        //this takes out all the numbers and replaces them with d
+        String sNoNum = s.replaceAll("(\\d+(?:\\.\\d+)?)", "d").replace(".", "").replace(" ", "");
+
+        System.out.println(sNoSpaces);
+        System.out.println(sNoNum);
+
+        ArrayList<String> expression= new ArrayList<String>();
 
         //let's do the pattern checking to find all the numbers
         Pattern numRegex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
@@ -65,19 +77,30 @@ public class Expression extends ExpressionTree {
 
 
         //now to populate the input expression array list
-        for(int i = 0; i < sNoSpaces.length(); i++){
-            char elem = sNoSpaces.charAt(i);
+        for(int i = 0; i < sNoNum.length(); i++){
+            char elem = sNoNum.charAt(i);
+
             if(elem == 'd'){
-                //this adds the whole digit to the inputExpression
-                String numVal = matcher.group();
-                expression.add(numVal.charAt(0));
+                if( matcher.find()){
+                    //this adds the whole digit to the inputExpression
+                    String numVal = matcher.group();
+//                    expression.add(numVal.charAt(0));
+                    expression.add(numVal);
+                }
             }else{
-                expression.add(elem);
+                expression.add(Character.toString(elem));
             }
         } //for loop to populate the expression
 
         // create a postfix arraylist
-        ArrayList<Character> postfixList = infixToPostfix(expression);
+        ArrayList<String> postfixList = infixToPostfix(expression);
+
+        // Note: testing if infix to postfix worked
+        System.out.print("This is the postfix list ");
+        for(int i = 0; i< postfixList.size(); i++){
+            System.out.print(postfixList.get(i) + " ");
+        }
+        System.out.println();
 
         // build the tree
         BNode<String> expressionRoot = buildTree(postfixList);
@@ -85,18 +108,23 @@ public class Expression extends ExpressionTree {
         // now set the expression tree root
         this.root = expressionRoot;
 
+        // Note: testing what went wrong
+        System.out.println("Input String " + s );
+        treePrint(this.root);
+        printInfix();
+        System.out.println();
     } //constructor
 
 
 
     // Reference: https://www.geeksforgeeks.org/expression-tree/
-    BNode buildTree(ArrayList<Character> postfixList){
+    BNode buildTree(ArrayList<String> postfixList){
         Stack<BNode> nodeStack = new Stack<>();
-        BNode node = new BNode(postfixList.get(0), null, null, null);
+        BNode node;
         BNode op1, op2;
 
         for(int i = 0; i < postfixList.size(); i++){
-            String elem = Character.toString(postfixList.get(i));
+            String elem = postfixList.get(i);
             // if it is not the operator
             if( !elem.equals("+") && !elem.equals("-") && !elem.equals("*") && !elem.equals("/")){
                 node = new BNode(elem, null, null, null);
@@ -133,116 +161,201 @@ public class Expression extends ExpressionTree {
 
 
     // Reference: https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/
-    private ArrayList<Character> infixToPostfix(ArrayList<Character> infix){
-        ArrayList<Character> result = new ArrayList<>();
-        //stack for the operators
-        Stack<Character> operators = new Stack<>();
-        //stack for the number and previous expression held
-        Stack<String> operands = new Stack<>();
+//    private ArrayList<String> infixToPostfix(ArrayList<String> infix){
+//        ArrayList<String> result = new ArrayList<>();
+//        //stack for the operators
+//        Stack<String> operators = new Stack<>();
+//        //stack for the number and previous expression held
+//        Stack<String> operands = new Stack<>();
+//
+//        //go through the infix expression and populate the prefix ArrayList
+//        for ( int i = 0; i< infix.size(); i++ ){
+//            String currentStr = infix.get(i);
+//            System.out.println("currentChar " + currentStr);
+//
+//            if(currentStr.equals('(')){
+//                operators.push(currentStr);
+//            }
+//            else if(currentStr.equals("*") || currentStr.equals("/") || currentStr.equals("+") || currentStr.equals("-")){
+//                operators.push(currentStr);
+//            }
+//            else if(currentStr.equals(")")){
+//                while( !operators.empty() && !operators.peek().equals("(") ){
+//                    //take the two operands
+//                    String op1 = operands.peek();
+//                    operands.pop();
+//                    String op2 = operands.peek();
+//                    operands.pop();
+//                    //now get the latest operator
+//                    String usedOp = operators.peek();
+//                    operators.pop();
+//
+//                    String temp =  op1 + " " + op2 + " " + usedOp;
+//                    operands.push(temp);
+//                }
+//                //now pop the opening bracket
+//                operators.pop();
+//            }
+//
+//            // if it's not an operator
+//            else if(!currentStr.equals("*") && !currentStr.equals("/") && !currentStr.equals("+") && !currentStr.equals("-")){
+//                operands.push(currentStr);
+//            }
+//
+//            //if it is an operator
+//            // push this operator from the stack after popping the operators that have a higher priority
+//            else{
+//                while (!operators.empty() && getPriority(currentStr) <= getPriority(operators.peek())){
+//                    //take the two operands
+//                    String op1 = operands.peek();
+//                    operands.pop();
+//                    String op2 = operands.peek();
+//                    operands.pop();
+//                    //now get the latest operator
+//                    String usedOp = operators.peek();
+//                    operators.pop();
+//
+//                    String temp =  op1 + " " + op2 + " " + usedOp;;
+//                    operands.push(temp);
+//                }
+//                //now push the current operator
+//                operators.push(currentStr);
+//            }//else
+//        } //main for loop
+//
+//        //if operators stack is not empty
+//        while (!operators.empty()){
+//            if( operands.size() >=2 ){
+//                //take the two operands
+//                String op1 = operands.peek();
+//                operands.pop();
+//                String op2 = operands.peek();
+//                operands.pop();
+//                //now get the latest operator
+//                String usedOp = operators.peek();
+//                operators.pop();
+//
+//                String temp = op1 + " " + op2 + " " + usedOp;
+//                operands.push(temp);
+//            }
+//        }
+//
+//        //--- populate the resulting arraylist
+//        String resultStr = operands.peek();
+//        //this takes out all the numbers
+//        String resultStrNoNum = resultStr.replaceAll("(\\d+(?:\\.\\d+)?)", "d").replace(".", "").replace(" ", "");
+//
+//        //let's do the pattern checking to find all the numbers
+//        Pattern numRegex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
+//        //this matches the pattern with all the numbers in the expression
+//        Matcher matcher = numRegex.matcher(resultStr);
+//
+//        for (int i = 0 ; i < resultStrNoNum.length(); i++){
+//            String elem = Character.toString(resultStrNoNum.charAt(i));
+//            if(elem.equals("d")){
+//                if(matcher.find()){
+//                    String numVal = matcher.group();
+//                    result.add(numVal);
+//                }
+//            }else{
+//                result.add(elem);
+//            }
+//        } //ending for
+//
+//        return result;
+//
+//    }// infixToPostfix
 
-        //go through the infix expression and populate the prefix ArrayList
-        for ( int i = 0; i< infix.size(); i++ ){
-            Character currentChar = infix.get(i);
-            if(currentChar == '('){
-                operators.push(currentChar);
-            }
-            else if(currentChar == '*' || currentChar == '/' || currentChar == '+' || currentChar == '-'){
-                operators.push(currentChar);
-            }
-            else if(currentChar == ')'){
-                while( !operators.empty() && operators.peek() != '(' ){
-                    //take the two operands
-                    String op1 = operands.peek();
-                    operands.pop();
-                    String op2 = operands.peek();
-                    operands.pop();
-                    //now get the latest operator
-                    Character usedOp = operators.peek();
-                    operators.pop();
+    // Reference: https://www.geeksforgeeks.org/stack-set-2-infix-to-postfix/
+    // new Reference: https://algorithms.tutorialhorizon.com/convert-infix-to-postfix-expression/
+    // Reference : https://stackoverflow.com/questions/26699089/infix-to-postfix-using-stacks-java
+    private ArrayList<String> infixToPostfix(ArrayList<String> infix){
+        ArrayList<String> result = new ArrayList<>();
+        //initialize empty stack
+        Stack<String> stack = new Stack<>();
 
-                    String temp =  op1 + " " + op2 + " " + usedOp;;
-                    operands.push(temp);
-                }
-                //now pop the opening bracket
-                operators.pop();
-            }
+        for(int i = 0; i < infix.size(); i++) {
+            String elem = infix.get(i);
+//            System.out.println("this is elem " + elem);
 
-            // if it's not an operator
-            else if(currentChar != '*' || currentChar != '/' || currentChar != '+' || currentChar != '-'){
-                // convert the char to a string
-                String currentStr = Character.toString(currentChar);
-                operands.push(currentStr);
-            }
-
-            //if it is an operator
-            // push this operator from the stack after popping the operators that have a higher priority
-            else{
-                while (!operators.empty() && getPriority(currentChar) <= getPriority(operators.peek())){
-                    //take the two operands
-                    String op1 = operands.peek();
-                    operands.pop();
-                    String op2 = operands.peek();
-                    operands.pop();
-                    //now get the latest operator
-                    Character usedOp = operators.peek();
-                    operators.pop();
-
-                    String temp =  op1 + " " + op2 + " " + usedOp;;
-                    operands.push(temp);
-                }
-                //now push the current operator
-                operators.push(currentChar);
-            }//else
-        } //main for loop
-
-        //if operators stack is not empty
-        while (!operators.empty()){
-            //take the two operands
-            String op1 = operands.peek();
-            operands.pop();
-            String op2 = operands.peek();
-            operands.pop();
-            //now get the latest operator
-            Character usedOp = operators.peek();
-            operators.pop();
-
-            String temp = op1 + " " + op2 + " " + usedOp;
-            operands.push(temp);
-        }
-
-        //--- populate the resulting arraylist
-        String resultStr = operands.peek();
-        //this takes out all the numbers
-        String resultStrNoNum = resultStr.replaceAll("(\\d+(?:\\.\\d+)?)", "d").replace(".", "").replace(" ", "");
-
-        //let's do the pattern checking to find all the numbers
-        Pattern numRegex = Pattern.compile("(\\d+(?:\\.\\d+)?)");
-        //this matches the pattern with all the numbers in the expression
-        Matcher matcher = numRegex.matcher(resultStr);
-
-        for (int i = 0 ; i < resultStrNoNum.length(); i++){
-            char elem = resultStrNoNum.charAt(i);
-            if(elem == 'd'){
-                if(matcher.find()){
-                    String numVal = matcher.group();
-                    result.add(numVal.charAt(0));
-                }
-            }else{
+            // not an operator or a brace
+            if (!elem.equals("+") && !elem.equals("-") && !elem.equals("*") && !elem.equals("/") && !elem.equals("(") && !elem.equals(")")) {
+                System.out.println("what is elem here "+ elem);
                 result.add(elem);
             }
-        } //ending for
+            // closing brace
+            else if(elem.equals(")")){
+                while(!stack.empty() && !stack.peek().equals("(")){
+                    result.add(stack.pop());
+                }
+                //remove opening brace
+//                stack.pop();
+            }
+            // if it an operator
+            else{
+//                System.out.println("what is elem here " + elem);
+                while(!stack.empty() && !elem.equals("(") && getPriority(stack.peek()) >= getPriority(elem)){
+                    String popped = stack.pop();
+                    if(!popped.equals("(")){
+                        result.add(popped);
+                    }
+                }
+                stack.push(elem);
+            }
 
+
+
+//            // it is an operator
+//            else if (elem.equals("+") || elem.equals("-") || elem.equals("*") || elem.equals("/")) {
+//                if (!stack.empty() && getPriority(elem) > getPriority(stack.peek())) {
+//                    stack.push(elem);
+//                } else {
+//                    while (!stack.empty() && getPriority(elem) <= getPriority(stack.peek())) {
+//                        String op = stack.pop();
+//                        if (!op.equals("(")) {
+//                            result.add(op);
+//                        } else {
+//                            elem = op;
+//                        }
+//                    }
+//                    stack.push(elem);
+//                }
+//            } else {
+//                 if (elem.charAt(0) == ')') {
+//                    while (!stack.empty() && !stack.peek().equals("(")) {
+//                        System.out.println("is it coming here");
+//                        String op = stack.pop();
+//                        result.add(op);
+//                    }
+//                }
+//                else if (elem.charAt(0) == '(') {
+//                    System.out.println("what about here");
+//                    stack.push(elem);
+//                }
+//
+//                //remove the opening brace
+//                stack.pop();
+//            }
+        } //for loop
+
+
+
+        //if anything remains on the stack add it to result
+        while(!stack.empty()){
+            String op = stack.pop();
+            if(!op.equals("(")){
+                result.add(op);
+            }
+        }
         return result;
-
-    }// infixToPostfix
-
+    }//infixtoPostfix
 
     // Method that gets the priority of the given operator
-    private int getPriority(char operator){
-        if(operator == '*' || operator == '/'){
+    private int getPriority(String operator){
+        if(operator.equals("*") || operator.equals("/")){
             return 2;
         }
-        else if(operator == '+' || operator == '-'){
+        else if(operator.equals("+") || operator.equals("-")){
             return 1;
         }
         return 0;
